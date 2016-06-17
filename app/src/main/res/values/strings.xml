@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Heart Rate Calculator</string>
+    <string name="resting_heart_rate">Resting Heart Rate</string>
+    <string name="max_heart_rate">Max Heart Rate</string>
+</resources>
