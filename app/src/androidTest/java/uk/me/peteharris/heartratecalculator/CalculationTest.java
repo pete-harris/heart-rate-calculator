@@ -1,5 +1,8 @@
 package uk.me.peteharris.heartratecalculator;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.test.InstrumentationRegistry;
 import android.support.test.espresso.UiController;
 import android.support.test.espresso.ViewAction;
 import android.support.test.espresso.matcher.ViewMatchers;
@@ -15,6 +18,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import static android.support.test.espresso.Espresso.onView;
+import static android.support.test.espresso.action.ViewActions.clearText;
 import static android.support.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static android.support.test.espresso.action.ViewActions.typeText;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
@@ -30,7 +34,21 @@ public class CalculationTest {
 
     @Rule
     public ActivityTestRule<MainActivity> activityRule
-            = new ActivityTestRule<>(MainActivity.class);
+            = new ActivityTestRule<MainActivity>(MainActivity.class){
+        @Override
+        protected void beforeActivityLaunched() {
+            clearSharedPrefs(InstrumentationRegistry.getTargetContext());
+            super.beforeActivityLaunched();
+        }
+    };
+
+    private void clearSharedPrefs(Context context) {
+        SharedPreferences prefs =
+                context.getSharedPreferences(MainActivity.class.getName(), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.clear();
+        editor.apply();
+    }
 
     @Before
     public void initRates(){
@@ -48,6 +66,23 @@ public class CalculationTest {
                 .check(matches(withText("Percentage: 40 %")));
         onView(withId(R.id.heartRateLabel))
                 .check(matches(withText("110")));
+
+
+        onView(withId(R.id.seekBar))
+                .perform(setProgress(80));
+        onView(withId(R.id.percentageLabel))
+                .check(matches(withText("Percentage: 80 %")));
+        onView(withId(R.id.heartRateLabel))
+                .check(matches(withText("170")));
+
+
+        onView(withId(R.id.maxheartrate))
+                .perform(clearText(), typeText("170"), closeSoftKeyboard());
+        onView(withId(R.id.percentageLabel))
+                .check(matches(withText("Percentage: 80 %")));
+        onView(withId(R.id.heartRateLabel))
+                .check(matches(withText("146")));
+    }
     }
 
 
