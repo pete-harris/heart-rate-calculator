@@ -2,10 +2,11 @@ package uk.me.peteharris.heartratecalculator;
 
 import android.databinding.BaseObservable;
 import android.databinding.Bindable;
-import android.databinding.tool.CompilerChef;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.SeekBar;
+
+import java.util.Locale;
 
 /**
  * Created by pharris on 17/06/16.
@@ -18,11 +19,11 @@ public class ViewModel extends BaseObservable {
 
     @Bindable
     public String getHeartRate(){
-        return String.format("%.0f", ( (maxHr - restingHr) * percentage) + restingHr);
+        return String.format(Locale.US, "%.0f", ( (maxHr - restingHr) * percentage) + restingHr);
     }
     @Bindable
     public String getPercentage(){
-        return String.format("Percentage: %.0f %%", 100 * percentage);
+        return String.format(Locale.US, "Percentage: %.0f %%", 100 * percentage);
     }
 
     public SeekBar.OnSeekBarChangeListener getPercentageChangeListener(){
