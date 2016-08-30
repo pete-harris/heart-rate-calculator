@@ -50,6 +50,7 @@
                 android:minHeight="72dp"
                 android:gravity="center"
                 tools:text="160"
+                android:id="@+id/heartRateLabel"
                 style="@style/TextAppearance.AppCompat.Display4"
                 android:text="@{viewModel.heartRate}"/>
 
@@ -57,6 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:text="Percentage: 55%"
+                android:id="@+id/percentageLabel"
                 style="@style/TextAppearance.AppCompat.Display2"
                 android:text="@{viewModel.percentage}" />
 
